@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    font-family:'Lucida Console', cursive;
+    font-size: 20px;
+    background: url("images/background.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+h1 {
+    margin: 0 0 50px;
+    font-family:'Lucida Console', cursive;
+
+}
+
+.input {
+    border: 1px solid #333;
+    border-radius: .3em;
+    padding: .25rem;
+    width: 7em;
+    font-family:'Lucida Console', cursive;
+}
+
+form{
+    margin: 0 0 50px;
+    font-family:'Lucida Console', cursive;
+}
+
+.submitButton{
+    width: 200px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 20px;
+    border: 2px solid forestgreen;
+    background-color: rgb(226, 252, 184);
+    cursor: pointer;
+    margin: 10px;
+    font-family:'Lucida Console', cursive;
+}

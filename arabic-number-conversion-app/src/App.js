@@ -19,16 +19,22 @@ function App() {
 
   return (
       <>
-      <h1>My number conversion app</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Arabic number:
-          <input type="text" pattern="[0-9]*" name="number"
-                 value={arabNumber} onChange={(e) => handleChange(e)}/>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-          <p>{result}</p>
+          <div className="App" >
+              <h1>My number conversion app</h1>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  Arabic number:
+                  <input type="text" pattern="[0-9]*" name="number"
+                         value={arabNumber} onChange={(e) => handleChange(e)}/>
+                </label>
+                  <br/>
+                <input className="submitButton" type="submit" value="Convert to Phrase!" />
+              </form>
+              <div className="result">
+                  <h3>Converted Number:</h3>
+                  <p>{arabNumber +" = "+result}</p>
+              </div>
+          </div>
       </>
   );
 }
