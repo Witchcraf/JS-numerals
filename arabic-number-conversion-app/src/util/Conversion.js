@@ -12,20 +12,22 @@ let divisionHundred;
 export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
     const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
     let resultPhrase = "";
+    let resultEnglishPhrase = "";
     //ConversionTo1000
     if(placeValueArray.length < 2){
-        resultPhrase += numberConversionTo1000(inputArabianNumber);
+        resultPhrase +=numberConversionTo1000(inputArabianNumber);
     }
     //ConversionBetween1000And1000000
     else if(placeValueArray.length === 2){
-        resultPhrase += numberConversionBetween1000And1000000(placeValueArray);
+        resultPhrase +=numberConversionBetween1000And1000000(placeValueArray);
 
     }
     //ConversionOver1000000
     else if(placeValueArray.length === 3){
         resultPhrase += numberConversionOver1000000(placeValueArray);
     }
-    return resultPhrase;
+
+    return resultEnglishPhrase !== "" ? resultEnglishPhrase : addConjunctionsToResultPhrase(resultPhrase);
 
 }
 
@@ -48,13 +50,13 @@ function getNameOfSplitNumber(splitNumber){
 
     }else if(splitNumber>19){
         let numberInDecimal = findNumberNameInLists(decimals,splitNumber);
-        if(numberInDecimal === undefined){
+        if(numberInDecimal === ""){
             let split = splitNumberByRealValue(splitNumber)
-            result += findNumberNameInLists(decimals, split[0]);
+            result += findNumberNameInLists(decimals, split[0])+" ";
             result += findNumberNameInLists(numbersUnder20AsText,split[1]);
         }
         else{
-            result += numberInDecimal;
+            result += numberInDecimal+" ";
         }
     }
     return result;
@@ -63,7 +65,11 @@ function getNameOfSplitNumber(splitNumber){
 function numberConversionTo1000(inputArabianNumber){
     let result ="";
     arrayOfSplittedNumber = splitNumberByRealValue(inputArabianNumber);
-    for (let i = 0; i < arrayOfSplittedNumber.length; i++) {
+    if(inputArabianNumber<100){
+        result += getNameOfSplitNumber(inputArabianNumber);
+    }
+    else {
+        for (let i = 0; i < arrayOfSplittedNumber.length; i++) {
             remainderMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "%")
             divisonMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "/")
             remainderThousand = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000, "%")
@@ -74,22 +80,22 @@ function numberConversionTo1000(inputArabianNumber){
                 continue;
             }
             if (remainderMillion === 0) {
-                result += getNameOfSplitNumber(divisonMillion) + " " + tenPowersAsText[2] + " ";
+                result += getNameOfSplitNumber(divisonMillion)+ " " + tenPowersAsText[2] ;
             } else if (remainderThousand === 0) {
                 if (divisionThousand < 100) {
-                    result += getNameOfSplitNumber(divisionThousand) + " " + tenPowersAsText[1] + " ";
+                    result += getNameOfSplitNumber(divisionThousand)+" " + tenPowersAsText[1];
                 } else {
                     let div = divisionThousand / 100;
-                    result += getNameOfSplitNumber(div) + " " + tenPowersAsText[0] + " " + tenPowersAsText[1] + " ";
+                    result += getNameOfSplitNumber(div) + " " +tenPowersAsText[0]+" "+ tenPowersAsText[1] ;
                 }
             } else if (remainderHundred === 0) {
-                result += getNameOfSplitNumber(divisionHundred) + " " + tenPowersAsText[0] + " and ";
+                result += getNameOfSplitNumber(divisionHundred) + " " + tenPowersAsText[0] +" " ;
             } else if (arrayOfSplittedNumber[i] < 100) {
 
                 result += getNameOfSplitNumber(arrayOfSplittedNumber[i]);
             }
-
         }
+    }
     return result;
 }
 
@@ -99,9 +105,9 @@ function numberConversionBetween1000And1000000(placeValueArray){
     let firstPlaceValueName;
     let secondPlaceValueName;
     if(firstPlaceValue < 100) {
-        firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) + " " + tenPowersAsText[1];}
+        firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) + " " +tenPowersAsText[1];}
     else{
-        firstPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[0]) + " " + tenPowersAsText[1];
+        firstPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[0])+" "+ tenPowersAsText[1];
     }
     secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1])
     result += firstPlaceValueName + " " + secondPlaceValueName;
@@ -114,8 +120,9 @@ function numberConversionOver1000000(placeValueArray){
     let firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) + " " + tenPowersAsText[2];
     let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]);
     let thirdPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[2]);
-    let formattedSecondPlaceValueName= formValueName(secondPlaceValueName);
-    result += firstPlaceValueName +" " + formattedSecondPlaceValueName + " " + thirdPlaceValueName;
+    //let formattedSecondPlaceValueName= formValueName(secondPlaceValueName);
+    result += firstPlaceValueName +" " + secondPlaceValueName + " " + thirdPlaceValueName;
+    //result += firstPlaceValueName +" " + formattedSecondPlaceValueName + " " + thirdPlaceValueName;
     return result;
 }
 
@@ -129,17 +136,38 @@ function findNumberNameInLists(array, number){
     return result;
 }
 
-function formValueName(secondPlaceValueName){
-    const splittedArray = secondPlaceValueName.split(" ");
-    let filteredAry = splittedArray.filter(function(e) { return e !== 'and' })
-    let joinedArray = filteredAry.join(' ');
-    return joinedArray + " " +tenPowersAsText[1];
-}
 
 function getRemainderOrDivisonFromSplitNumber(splitNumber, divider, operator){
-    if(operator === "%"){
-        return splitNumber % divider;
-    }else {
-        return splitNumber / divider;
+    let remainder = splitNumber % divider;
+    let division = splitNumber / divider;
+    return (operator === "%") ?  remainder : division;
+
+}
+
+function addConjunctionsToResultPhrase(resultPhrase){
+    console.log(resultPhrase)
+    let a = resultPhrase.split(" ");
+    let lastElement = a[a.length - 1];
+    let replacedWord;
+
+
+    for (let i = 0; i < a.length; i++) {
+        let slicedWord = a[i].slice(-2);
+        //between 100 and 1000
+        if(a[i] === "hundred" && a[i] !== lastElement){
+            replacedWord = a[i].concat(" and ");
+            a[i] = replacedWord;
+
+        }
+
+        //add"-"
+        if(slicedWord === "ty" && lastElement !== ""){
+            replacedWord = a[i].concat("-");
+            a[i] = replacedWord;
+
+        }
     }
+
+    console.log(a)
+    return a.join(" ");
 }
