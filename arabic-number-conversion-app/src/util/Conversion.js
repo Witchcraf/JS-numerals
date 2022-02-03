@@ -1,7 +1,7 @@
 const numbersUnder20AsText = {1:"one", 2:"two", 3:"three", 4:"four", 5:"five", 6:"six", 7:"seven", 8:"eight", 9:"nine", 10:"ten", 11:"eleven", 12:"twelve", 13:"thirteen", 14:"fourteen", 15:"fifteen", 16:"sixteen",17:"seventeen",18:"eighteen",19:"nineteen"}
 const decimals = {20:"twenty",30:"thirty", 40:"forty", 50:'fifty', 60:'sixty',70:'seventy',80:'eighty',90:'ninety'};
 const tenPowersAsText = ["hundred","thousand","million"]
-let arrayOfSplittedNumber;
+
 let remainderMillion;
 let divisonMillion;
 let remainderThousand;
@@ -14,7 +14,7 @@ export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
     let resultPhrase = "";
     //ConversionTo1000
     if(placeValueArray.length < 2){
-        resultPhrase +=numberConversionTo1000(inputArabianNumber);
+        resultPhrase +=numberConversionTo1000(placeValueArray);
     }
     //ConversionBetween1000And1000000
     else if(placeValueArray.length === 2){
@@ -50,7 +50,7 @@ function getNameOfSplitNumber(splitNumber){
     }else if(splitNumber>19){
         let numberInDecimal = findNumberNameInLists(decimals,splitNumber);
         if(numberInDecimal === ""){
-            let split = splitNumberByRealValue(splitNumber)
+            let split = splitNumberByRealValue(splitNumber);
             result += findNumberNameInLists(decimals, split[0])+" ";
             result += findNumberNameInLists(numbersUnder20AsText,split[1]);
         }
@@ -63,11 +63,8 @@ function getNameOfSplitNumber(splitNumber){
 
 function numberConversionTo1000(inputArabianNumber){
     let result ="";
-    arrayOfSplittedNumber = splitNumberByRealValue(inputArabianNumber);
-    if(inputArabianNumber<100){
-        result += getNameOfSplitNumber(inputArabianNumber);
-    }
-    else {
+    let arrayOfSplittedNumber = splitNumberByRealValue(inputArabianNumber);
+    let numberUNder100 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1] + arrayOfSplittedNumber[arrayOfSplittedNumber.length-2];
         for (let i = 0; i < arrayOfSplittedNumber.length; i++) {
             remainderMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "%")
             divisonMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "/")
@@ -89,11 +86,10 @@ function numberConversionTo1000(inputArabianNumber){
                 }
             } else if (remainderHundred === 0) {
                 result += getNameOfSplitNumber(divisionHundred) + " " + tenPowersAsText[0] +" " ;
-            } else if (arrayOfSplittedNumber[i] < 100) {
-
-                result += getNameOfSplitNumber(arrayOfSplittedNumber[i]);
+            } else if (arrayOfSplittedNumber[i] === arrayOfSplittedNumber[arrayOfSplittedNumber.length-2]) {
+                result += getNameOfSplitNumber(numberUNder100);
             }
-        }
+
     }
     return result;
 }
@@ -157,14 +153,14 @@ function addConjunctionsToResultPhrase(resultPhrase){
 
         }
 
-        if(a[i] === "thousand" && lastElement !== "" && a[i+1] !== "and" && !a.includes("hundred")){
+        else if(a[i] === "thousand" && lastElement !== "" && a[i+1] !== "and" && !a.includes("hundred")){
             replacedWord = a[i].concat(" and ");
             a[i] = replacedWord;
 
         }
 
         //add"-"
-        if(slicedWord === "ty" && lastElement !== ""){
+        else if(slicedWord === "ty" && lastElement !== ""){
             replacedWord = a[i].concat("-");
             a[i] = replacedWord;
 
