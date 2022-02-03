@@ -12,7 +12,6 @@ let divisionHundred;
 export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
     const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
     let resultPhrase = "";
-    let resultEnglishPhrase = "";
     //ConversionTo1000
     if(placeValueArray.length < 2){
         resultPhrase +=numberConversionTo1000(inputArabianNumber);
@@ -151,7 +150,8 @@ function addConjunctionsToResultPhrase(resultPhrase){
 
     for (let i = 0; i < a.length; i++) {
         let slicedWord = a[i].slice(-2);
-        if(a[i] === "hundred" && lastElement !== "" && a[i+1] !== "and"){
+        //add "and"
+        if(a[i] === "hundred" && lastElement !== "" && a[i+1] !== "and" && a[i+1] !== ""){
             replacedWord = a[i].concat(" and ");
             a[i] = replacedWord;
 
