@@ -64,7 +64,8 @@ function getNameOfSplitNumber(splitNumber){
 function numberConversionTo1000(inputArabianNumber){
     let result ="";
     let arrayOfSplittedNumber = splitNumberByRealValue(inputArabianNumber);
-    let numberUNder100 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1] + arrayOfSplittedNumber[arrayOfSplittedNumber.length-2];
+    let numberBetween10And100 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1] + arrayOfSplittedNumber[arrayOfSplittedNumber.length-2];
+    let numberUnder10 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1];
         for (let i = 0; i < arrayOfSplittedNumber.length; i++) {
             remainderMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "%")
             divisonMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "/")
@@ -87,9 +88,11 @@ function numberConversionTo1000(inputArabianNumber){
             } else if (remainderHundred === 0) {
                 result += getNameOfSplitNumber(divisionHundred) + " " + tenPowersAsText[0] +" " ;
             } else if (arrayOfSplittedNumber[i] === arrayOfSplittedNumber[arrayOfSplittedNumber.length-2]) {
-                result += getNameOfSplitNumber(numberUNder100);
+                result += getNameOfSplitNumber(numberBetween10And100);
+                break;
+            }else if (arrayOfSplittedNumber[i] === numberUnder10) {
+                result += getNameOfSplitNumber(numberUnder10);
             }
-
     }
     return result;
 }
