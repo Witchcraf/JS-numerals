@@ -27,7 +27,7 @@ export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
         resultPhrase += numberConversionOver1000000(placeValueArray);
     }
 
-    return resultEnglishPhrase !== "" ? resultEnglishPhrase : addConjunctionsToResultPhrase(resultPhrase);
+    return  addConjunctionsToResultPhrase(resultPhrase);
 
 }
 
@@ -120,9 +120,7 @@ function numberConversionOver1000000(placeValueArray){
     let firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) + " " + tenPowersAsText[2];
     let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]);
     let thirdPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[2]);
-    //let formattedSecondPlaceValueName= formValueName(secondPlaceValueName);
     result += firstPlaceValueName +" " + secondPlaceValueName + " " + thirdPlaceValueName;
-    //result += firstPlaceValueName +" " + formattedSecondPlaceValueName + " " + thirdPlaceValueName;
     return result;
 }
 
@@ -153,8 +151,13 @@ function addConjunctionsToResultPhrase(resultPhrase){
 
     for (let i = 0; i < a.length; i++) {
         let slicedWord = a[i].slice(-2);
-        //between 100 and 1000
-        if(a[i] === "hundred" && a[i] !== lastElement){
+        if(a[i] === "hundred" && lastElement !== "" && a[i+1] !== "and"){
+            replacedWord = a[i].concat(" and ");
+            a[i] = replacedWord;
+
+        }
+
+        if(a[i] === "thousand" && lastElement !== "" && a[i+1] !== "and" && !a.includes("hundred")){
             replacedWord = a[i].concat(" and ");
             a[i] = replacedWord;
 
