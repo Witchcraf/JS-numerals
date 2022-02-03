@@ -116,7 +116,7 @@ function numberConversionOver1000000(placeValueArray){
     let result="";
     let firstPlaceValue = parseInt(placeValueArray[0]);
     let firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) + " " + tenPowersAsText[2];
-    let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]);
+    let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]) +" "+tenPowersAsText[1];
     let thirdPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[2]);
     result += firstPlaceValueName +" " + secondPlaceValueName + " " + thirdPlaceValueName;
     return result;
@@ -170,6 +170,9 @@ function addConjunctionsToResultPhrase(resultPhrase){
         }
     }
 
+    let joinedResult = a.join(" ");
+
     console.log(a)
-    return a.join(" ");
+    console.log(joinedResult)
+    return joinedResult;
 }
