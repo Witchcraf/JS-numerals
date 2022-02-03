@@ -2,13 +2,6 @@ const numbersUnder20AsText = {1:"one", 2:"two", 3:"three", 4:"four", 5:"five", 6
 const decimals = {20:"twenty",30:"thirty", 40:"forty", 50:'fifty', 60:'sixty',70:'seventy',80:'eighty',90:'ninety'};
 const tenPowersAsText = ["hundred","thousand","million"]
 
-let remainderMillion;
-let divisonMillion;
-let remainderThousand;
-let divisionThousand;
-let remainderHundred;
-let divisionHundred;
-
 export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
     const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
     let resultPhrase = "";
@@ -63,12 +56,14 @@ function getNameOfSplitNumber(splitNumber){
 
 function numberConversionTo1000(inputArabianNumber){
     let result ="";
+    let remainderThousand;
+    let divisionThousand;
+    let remainderHundred;
+    let divisionHundred;
     let arrayOfSplittedNumber = splitNumberByRealValue(inputArabianNumber);
     let numberBetween10And100 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1] + arrayOfSplittedNumber[arrayOfSplittedNumber.length-2];
     let numberUnder10 = arrayOfSplittedNumber[arrayOfSplittedNumber.length-1];
         for (let i = 0; i < arrayOfSplittedNumber.length; i++) {
-            remainderMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "%")
-            divisonMillion = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000000, "/")
             remainderThousand = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000, "%")
             divisionThousand = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 1000, "/")
             remainderHundred = getRemainderOrDivisonFromSplitNumber(arrayOfSplittedNumber[i], 100, "%")
@@ -76,9 +71,7 @@ function numberConversionTo1000(inputArabianNumber){
             if (arrayOfSplittedNumber[i] === 0) {
                 continue;
             }
-            if (remainderMillion === 0) {
-                result += getNameOfSplitNumber(divisonMillion)+ " " + tenPowersAsText[2] ;
-            } else if (remainderThousand === 0) {
+            if (remainderThousand === 0) {
                 if (divisionThousand < 100) {
                     result += getNameOfSplitNumber(divisionThousand)+" " + tenPowersAsText[1];
                 } else {
@@ -141,7 +134,6 @@ function getRemainderOrDivisonFromSplitNumber(splitNumber, divider, operator){
 }
 
 function addConjunctionsToResultPhrase(resultPhrase){
-    console.log(resultPhrase)
     let a = resultPhrase.split(" ");
     let lastElement = a[a.length - 1];
     let replacedWord;
@@ -150,7 +142,7 @@ function addConjunctionsToResultPhrase(resultPhrase){
     for (let i = 0; i < a.length; i++) {
         let slicedWord = a[i].slice(-2);
         //add "and"
-        if(a[i] === "hundred" && lastElement !== "" && a[i+1] !== "and" && a[i+1] !== ""){
+        if(a[i] === "hundred" && a[i+1] !== "" && a[i+1] !== "and" && a[i+1] !== ""){
             replacedWord = a[i].concat(" and ");
             a[i] = replacedWord;
 
@@ -169,10 +161,5 @@ function addConjunctionsToResultPhrase(resultPhrase){
 
         }
     }
-
-    let joinedResult = a.join(" ");
-
-    console.log(a)
-    console.log(joinedResult)
-    return joinedResult;
+    return a.join(" ");
 }
