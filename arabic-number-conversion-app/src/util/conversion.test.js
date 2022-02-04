@@ -1,5 +1,9 @@
 import {convertArabianNumberToEnglishPhrase} from "./conversion";
 
+/**
+    *Tests when input is in correct format.
+* **/
+
 test('7', ()=> {
     const result = convertArabianNumberToEnglishPhrase(7);
     expect(result).toBe("seven");
