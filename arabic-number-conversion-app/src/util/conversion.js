@@ -15,6 +15,9 @@ export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
             break;
         case 3://Conversion over 1000000
             englishPhrase += numberConversionOver1000000(placeValueArray);
+            break;
+        default:
+            throw new Error('Unknown number: please choose a number less than 1 billion');
     }
     return  addConjunctionsToPhrase(englishPhrase);
 }
@@ -55,11 +58,11 @@ function getNameOfSplitNumber(number){
     }else{
         if(numberInDecimal === ""){
             //Create number name from decimal value name and exceptional name.
-            result += findNumberNameInObject(decimals, decimalNumber)+" ";
+            result += findNumberNameInObject(decimals, decimalNumber)+"-";
             result += findNumberNameInObject(numbersUnder20AsText,remainderNumber);
         }
         else{
-            result += numberInDecimal+" ";
+            result += numberInDecimal;
         }
     }
     return result;
@@ -114,7 +117,7 @@ function numberConversionOver1000000(placeValueArray){
     let result="";
     let firstPlaceValue = parseInt(placeValueArray[0]);
     let firstPlaceValueName = getNameOfSplitNumber(firstPlaceValue) +" "+ tenPowersAsText[2];
-    let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]) +" "+tenPowersAsText[1];
+    let secondPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[1]) + tenPowersAsText[1];
     let thirdPlaceValueName = convertArabianNumberToEnglishPhrase(placeValueArray[2]);
     result += firstPlaceValueName +" "+ secondPlaceValueName +" "+ thirdPlaceValueName;
     return result;
@@ -154,25 +157,15 @@ function addConjunctionsToPhrase(phrase){
     let replacedWord;
 
     for (let i = 0; i < resultPhrase.length; i++) {
-        let slicedWord = resultPhrase[i].slice(-2);
         //add "and" when number greater than 100 and less than 1000
         if(resultPhrase[i] === "hundred" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "and" && resultPhrase[i+1] !== ""){
-            replacedWord = resultPhrase[i].concat(" and ");
+            replacedWord = resultPhrase[i].concat(" and");
             resultPhrase[i] = replacedWord;
-
         }
         //add "and" when number greater than 1000
         else if(resultPhrase[i] === "thousand" && lastElement !== "" && resultPhrase[i+1] !== "and" && !resultPhrase.includes("hundred")){
-            replacedWord = resultPhrase[i].concat(" and ");
+            replacedWord = resultPhrase[i].concat(" and");
             resultPhrase[i] = replacedWord;
-
-        }
-
-        //add "-"
-        else if(slicedWord === "ty" && lastElement !== ""){
-            replacedWord = resultPhrase[i].concat("-");
-            resultPhrase[i] = replacedWord;
-
         }
     }
     return resultPhrase.join(" ");
