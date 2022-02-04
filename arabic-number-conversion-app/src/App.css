@@ -5,24 +5,11 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    font-family:'Lucida Console', cursive;
     font-size: 20px;
 }
 
-h1 {
-    margin: 0 0 50px;
-    font-family:'Lucida Console', cursive;
-}
-
-.input {
-    border: 1px solid #333;
-    border-radius: .3em;
-    padding: .25rem;
-    width: 7em;
-    font-family:'Lucida Console', cursive;
-}
-
-form{
-    margin: 0 0 50px;
-    font-family:'Lucida Console', cursive;
+@font-face {
+    font-family: 'MATRIX';
+    font-weight: 1300;
+    src: local('MATRIX'), url(./fonts/matrix.ttf) format('opentype');
 }
