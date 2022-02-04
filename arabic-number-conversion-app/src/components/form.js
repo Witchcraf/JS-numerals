@@ -18,11 +18,12 @@ function Form({arabNumber, setArabNumber, setResult}){
 
     return (
         <form onSubmit={handleSubmit} data-testid="conversionform">
-            <TextField id="standard-basic"
-                       label="Arabic Number"
-                       variant="standard"
+            <TextField id="outlined-basic"
+                       variant="outlined"
                        type="number"
-                       inputProps={{ pattern: "[0-9]*",min:1,max:1000000000}}
+                       inputProps={{ pattern: "[0-9]*",min:1,max:1000000000,
+                           style:{backgroundColor: "#F5F5DC",
+                                   width:"200px"}}}
                        value={arabNumber} onChange={(e) => handleChange(e)}
                        required/>
             <br/>
@@ -44,19 +45,19 @@ const jump = keyframes`
 const Button = styled.button`
   max-width: 100%;
   padding: 11px 13px;
-  color: rgb(253, 249, 243);
+  color: black;
   font-weight: 600;
   text-transform: uppercase;
-  background: #FF6666;
+  background: #66CC00;
   border: none;
   border-radius: 3px;
   outline: 0;
   cursor: pointer;
-  margin-top: 0.6rem;
+  margin-top: 50px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-out;
   :hover {
-    background: #66CC00;
+    background: #FFC0CB;
     animation: ${jump} 0.2s ease-out forwards;
   }
 `;
