@@ -2,6 +2,7 @@ import './App.css';
 import {useState} from "react";
 import Form from "./components/form"
 import EnglishPhrase from "./components/englishphrase"
+import Matrix from "./components/matrixbackground";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   return (
       <>
           <div className="App" >
+              <Matrix />
               <h1>My number conversion app</h1>
               <Form arabNumber={arabNumber} setArabNumber={setArabNumber} setResult={setResult}/>
               <EnglishPhrase arabNumber={arabNumber} result={result}/>
