@@ -1,6 +1,6 @@
 import './App.css';
 import {useState} from "react";
-import {convertArabianNumberToEnglishPhrase} from "./util/Conversion";
+import {convertArabianNumberToEnglishPhrase} from "./util/conversion";
 
 function App() {
     const [arabNumber, setArabNumber] = useState(0);
@@ -21,7 +21,7 @@ function App() {
       <>
           <div className="App" >
               <h1>My number conversion app</h1>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} data-testid="conversionform">
                 <label>
                   Arabic number:
                   <input type="text" pattern="[0-9]*" name="number"
