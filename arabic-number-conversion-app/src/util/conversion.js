@@ -158,7 +158,7 @@ function addConjunctionsToPhrase(phrase){
 
     for (let i = 0; i < resultPhrase.length; i++) {
         //add "and" when number greater than 100 and less than 1000
-        if(resultPhrase[i] === "hundred" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "and" && resultPhrase[i+1] !== ""){
+        if(resultPhrase[i] === "hundred" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "and" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "thousand"){
             replacedWord = resultPhrase[i].concat(" and");
             resultPhrase[i] = replacedWord;
         }
