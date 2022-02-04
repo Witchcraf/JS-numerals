@@ -1,6 +1,8 @@
 import './App.css';
 import {useState} from "react";
 import {convertArabianNumberToEnglishPhrase} from "./util/conversion";
+import styled,{keyframes} from "styled-components";
+
 
 function App() {
     const [arabNumber, setArabNumber] = useState(0);
@@ -28,7 +30,7 @@ function App() {
                          value={arabNumber} onChange={(e) => handleChange(e)}/>
                 </label>
                   <br/>
-                <input className="submitButton" type="submit" value="Convert to Phrase!" />
+                  <Button>Convert to Phrase!</Button>
               </form>
               <div className="result">
                   <h3>Converted Number:</h3>
@@ -37,6 +39,35 @@ function App() {
           </div>
       </>
   );
+
 }
+const jump = keyframes`
+  from{
+    transform: translateY(0)
+  }
+  to{
+    transform: translateY(-3px)
+  }
+`;
+
+const Button = styled.button`
+  max-width: 100%;
+  padding: 11px 13px;
+  color: rgb(253, 249, 243);
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #FF6666;
+  border: none;
+  border-radius: 3px;
+  outline: 0;
+  cursor: pointer;
+  margin-top: 0.6rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-out;
+  :hover {
+    background: #66CC00;
+    animation: ${jump} 0.2s ease-out forwards;
+  }
+`;
 
 export default App;
