@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-function MatrixBackground({ timeout = 50 }) {
+
+function MatrixBackground({ timeout = 172 }) {
     const canvas = useRef();
 
     useEffect(() => {
@@ -65,5 +66,4 @@ function MatrixBackground({ timeout = 50 }) {
         </div>
     );
 }
-
 export default MatrixBackground;
