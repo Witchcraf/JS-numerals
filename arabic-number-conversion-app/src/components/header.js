@@ -8,6 +8,7 @@ function Title({title}){
 }
 
 const MainTitle = styled.h1`
+    margin-bottom: 100px;
     color: #F5F5DC;
     font-family: 'MATRIX';
     font-size: 4rem;
