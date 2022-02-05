@@ -152,21 +152,34 @@ function getRemainderOrDivisonFromSplitNumber(splitNumber, divider, operator){
     * Create text to display by adding conjunctions
  * **/
 function addConjunctionsToPhrase(phrase){
-    const resultPhrase = phrase.split(" ");
-    const lastElement = resultPhrase[resultPhrase.length - 1];
+    const splittedPhrase = phrase.split(" ");
+    const lastElement = splittedPhrase[splittedPhrase.length - 1];
+    let resultPhrase;
     let replacedWord;
 
-    for (let i = 0; i < resultPhrase.length; i++) {
+    for (let i = 0; i < splittedPhrase.length; i++) {
         //add "and" when number greater than 100 and less than 1000
-        if(resultPhrase[i] === "hundred" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "and" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "thousand"){
-            replacedWord = resultPhrase[i].concat(" and");
-            resultPhrase[i] = replacedWord;
+        if(splittedPhrase[i] === "hundred" && splittedPhrase[i+1] !== "" && splittedPhrase[i+1] !== "and" && splittedPhrase[i+1] !== "" && splittedPhrase[i+1] !== "thousand"){
+            replacedWord = splittedPhrase[i].concat(" and");
+            splittedPhrase[i] = replacedWord;
         }
         //add "and" when number greater than 1000
-        else if(resultPhrase[i] === "thousand" && lastElement !== "" && resultPhrase[i+1] !== "and" && !resultPhrase.includes("hundred")){
-            replacedWord = resultPhrase[i].concat(" and");
-            resultPhrase[i] = replacedWord;
+        else if(splittedPhrase[i] === "thousand" && lastElement !== "" && splittedPhrase[i+1] !== "and" && !splittedPhrase.includes("hundred")){
+            replacedWord = splittedPhrase[i].concat(" and");
+            splittedPhrase[i] = replacedWord;
         }
     }
+    resultPhrase = checkZeroInResultPhrase(splittedPhrase);
     return resultPhrase.join(" ");
+}
+
+
+/**
+     * Check zero in result phrase.
+ * **/
+function checkZeroInResultPhrase(resultPhrase){
+    if(resultPhrase.length>1 && resultPhrase[resultPhrase.length-1]==="zero"){
+        resultPhrase.pop()
+    }
+    return resultPhrase;
 }
