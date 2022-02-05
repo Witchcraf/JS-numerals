@@ -1,8 +1,16 @@
+import styled from "styled-components";
+
+
 function EnglishPhrase({result}){
     return (
-        <div className="result">
-          <p style={{color:"#F5F5DC", fontSize:"30px", fontFamily:"MATRIX"}}>{result}</p>
-        </div>
-    )
+            <Result>{result}</Result>
+            )
 }
+
+const Result = styled.p`
+    color: #F5F5DC;
+    font-family: 'MATRIX';
+    font-size: 2rem;
+    line-height: 1;
+`;
 export default EnglishPhrase;
