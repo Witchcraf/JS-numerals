@@ -10,6 +10,7 @@ function EnglishPhrase({result}){
 const Result = styled.p`
     color: #F5F5DC;
     font-family: 'MATRIX';
+    font-weight: 500;
     font-size: 2rem;
     line-height: 1;
 `;
