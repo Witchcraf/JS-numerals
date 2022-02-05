@@ -13,15 +13,23 @@ function Form({arabNumber, setArabNumber, setResult}){
             width: "30ch",
             height: "6ch",
             backgroundColor: "#F5F5DC",
-            borderRadius:"15px"
-        }
+            borderRadius:"15px",
+            "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                    borderRadius: "15px",
+                    borderColor: "#000fff"
+                }
+            }
+            }
     }));
     const classes = useStyles();
+
 
     //set arabNumber in usestate
     const handleChange = (event) => {
         setArabNumber(event.target.value);
     }
+
 
     //convert number to phrase and set the result in usestate
     const handleSubmit = (event) => {
@@ -29,6 +37,7 @@ function Form({arabNumber, setArabNumber, setResult}){
         setResult(result);
         event.preventDefault();
     }
+
 
     return (
         <form onSubmit={handleSubmit} data-testid="conversionform">
@@ -45,6 +54,7 @@ function Form({arabNumber, setArabNumber, setResult}){
     )
 }
 
+
 const jump = keyframes`
     from{
     transform: translateY(0)
@@ -54,9 +64,10 @@ const jump = keyframes`
     }
 `;
 
+
 const Button = styled.button`
     max-width: 100%;
-    padding: 11px 13px;
+    padding: 13px 13px;
     color: black;
     font-weight: 600;
     text-transform: uppercase;
@@ -65,7 +76,8 @@ const Button = styled.button`
     border-radius: 15px;
     outline: 0;
     cursor: pointer;
-    margin-top: 50px;
+    margin-top: 70px;
+    margin-bottom: 50px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
     :hover {
