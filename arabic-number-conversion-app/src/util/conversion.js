@@ -1,25 +1,28 @@
-const numbersUnder20AsText = {0:"zero",1:"one", 2:"two", 3:"three", 4:"four", 5:"five", 6:"six", 7:"seven", 8:"eight", 9:"nine", 10:"ten", 11:"eleven", 12:"twelve", 13:"thirteen", 14:"fourteen", 15:"fifteen", 16:"sixteen",17:"seventeen",18:"eighteen",19:"nineteen"}
+const numbersUnder20AsText = {1:"one", 2:"two", 3:"three", 4:"four", 5:"five", 6:"six", 7:"seven", 8:"eight", 9:"nine", 10:"ten", 11:"eleven", 12:"twelve", 13:"thirteen", 14:"fourteen", 15:"fifteen", 16:"sixteen",17:"seventeen",18:"eighteen",19:"nineteen"}
 const decimals = {20:"twenty",30:"thirty", 40:"forty", 50:'fifty', 60:'sixty',70:'seventy',80:'eighty',90:'ninety'};
 const tenPowersAsText = ["hundred","thousand","million"]
 
 
 export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
-    const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
-    let englishPhrase = "";
-    switch (placeValueArray.length){
-        case 1: //Conversion to 1000
-            englishPhrase +=numberConversionTo1000(placeValueArray, 100, tenPowersAsText[0]);
-            break;
-        case 2://Conversion between 1000 and 1000000
-            englishPhrase +=numberConversionBetween1000And1000000(placeValueArray, tenPowersAsText[1]);
-            break;
-        case 3://Conversion over 1000000
-            englishPhrase += numberConversionOver1000000(placeValueArray);
-            break;
-        default:
-            throw new Error('Unknown number: please choose a number less than 1 billion');
+    if(inputArabianNumber!==0) {
+        const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
+        let englishPhrase = "";
+        switch (placeValueArray.length) {
+            case 1: //Conversion to 1000
+                englishPhrase += numberConversionTo1000(placeValueArray, 100, tenPowersAsText[0]);
+                break;
+            case 2://Conversion between 1000 and 1000000
+                englishPhrase += numberConversionBetween1000And1000000(placeValueArray, tenPowersAsText[1]);
+                break;
+            case 3://Conversion over 1000000
+                englishPhrase += numberConversionOver1000000(placeValueArray);
+                break;
+            default:
+                throw new Error('Unknown number: please choose a number less than 1 billion');
+        }
+        return addConjunctionsToPhrase(englishPhrase);
     }
-    return  addConjunctionsToPhrase(englishPhrase);
+    return "zero";
 }
 
 
@@ -82,7 +85,7 @@ function numberConversionTo1000(placeValueArray,divider, placeValueAsText){
     if(parseSplitNumber>divider) {
         result += getNameOfSplitNumber(division) +" "+ placeValueAsText +" ";
     }
-    if(remainder >= 0) {
+    if(remainder > 0) {
         result += getNameOfSplitNumber(remainder);
     }
     return result;
@@ -152,34 +155,21 @@ function getRemainderOrDivisonFromSplitNumber(splitNumber, divider, operator){
     * Create text to display by adding conjunctions
  * **/
 function addConjunctionsToPhrase(phrase){
-    const splittedPhrase = phrase.split(" ");
-    const lastElement = splittedPhrase[splittedPhrase.length - 1];
-    let resultPhrase;
+    const resultPhrase = phrase.split(" ");
+    const lastElement = resultPhrase[resultPhrase.length - 1];
     let replacedWord;
 
-    for (let i = 0; i < splittedPhrase.length; i++) {
+    for (let i = 0; i < resultPhrase.length; i++) {
         //add "and" when number greater than 100 and less than 1000
-        if(splittedPhrase[i] === "hundred" && splittedPhrase[i+1] !== "" && splittedPhrase[i+1] !== "and" && splittedPhrase[i+1] !== "" && splittedPhrase[i+1] !== "thousand"){
-            replacedWord = splittedPhrase[i].concat(" and");
-            splittedPhrase[i] = replacedWord;
+        if(resultPhrase[i] === "hundred" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "and" && resultPhrase[i+1] !== "" && resultPhrase[i+1] !== "thousand"){
+            replacedWord = resultPhrase[i].concat(" and");
+            resultPhrase[i] = replacedWord;
         }
         //add "and" when number greater than 1000
-        else if(splittedPhrase[i] === "thousand" && lastElement !== "" && splittedPhrase[i+1] !== "and" && !splittedPhrase.includes("hundred")){
-            replacedWord = splittedPhrase[i].concat(" and");
-            splittedPhrase[i] = replacedWord;
+        else if(resultPhrase[i] === "thousand" && lastElement !== "" && resultPhrase[i+1] !== "and" && !resultPhrase.includes("hundred")){
+            replacedWord = resultPhrase[i].concat(" and");
+            resultPhrase[i] = replacedWord;
         }
     }
-    resultPhrase = checkZeroInResultPhrase(splittedPhrase);
     return resultPhrase.join(" ");
-}
-
-
-/**
-     * Check zero in result phrase.
- * **/
-function checkZeroInResultPhrase(resultPhrase){
-    if(resultPhrase.length>1 && resultPhrase[resultPhrase.length-1]==="zero"){
-        resultPhrase.pop()
-    }
-    return resultPhrase;
 }

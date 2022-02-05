@@ -1,17 +1,12 @@
 import {convertArabianNumberToEnglishPhrase} from "./conversion";
 
 /**
-    *Tests when input is in correct format.
+    *Tests with given examples.
 * **/
 
 test('7', ()=> {
     const result = convertArabianNumberToEnglishPhrase(7);
     expect(result).toBe("seven");
-})
-
-test('10', ()=> {
-    const result = convertArabianNumberToEnglishPhrase(10);
-    expect(result).toBe("ten");
 })
 
 test('42', ()=> {
@@ -42,5 +37,20 @@ test('342251', ()=> {
 test('1300420', ()=> {
     const result = convertArabianNumberToEnglishPhrase(1300420);
     expect(result).toBe("one million three hundred thousand four hundred and twenty");
+})
+
+
+/**
+ *Tests due to exceptional cases.
+ * **/
+test('0', ()=> {
+    const result = convertArabianNumberToEnglishPhrase(0);
+    expect(result).toBe("zero");
+})
+
+
+test('10', ()=> {
+    const result = convertArabianNumberToEnglishPhrase(10);
+    expect(result).toBe("ten");
 })
 
