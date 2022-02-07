@@ -4,7 +4,7 @@ const tenPowersAsText = ["hundred","thousand","million"]
 
 
 export function convertArabianNumberToEnglishPhrase(inputArabianNumber) {
-    if(inputArabianNumber!==0) {
+    if(parseInt(inputArabianNumber)!==0) {
         const placeValueArray = splitNumberByPlaceValues(inputArabianNumber);
         let englishPhrase = "";
         switch (placeValueArray.length) {
