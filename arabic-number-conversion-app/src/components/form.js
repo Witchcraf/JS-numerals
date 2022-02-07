@@ -25,12 +25,6 @@ function Form({arabNumber, setArabNumber, setResult}){
     const classes = useStyles();
 
 
-    //set arabNumber in usestate
-    const handleChange = (event) => {
-        setArabNumber(event.target.value);
-    }
-
-
     //convert number to phrase and set the result in usestate
     const handleSubmit = (event) => {
         let result = convertArabianNumberToEnglishPhrase(arabNumber);
@@ -45,11 +39,12 @@ function Form({arabNumber, setArabNumber, setResult}){
                        variant="outlined"
                        type="number"
                        className={classes.textField}
-                       inputProps={{ pattern: "[0-9]*",min:0,max:1000000000}}
-                       value={arabNumber} onChange={(e) => handleChange(e)}
+                       placeholder="0"
+                       inputProps={{ pattern: "[0-9]*",min:0,max:1000000000, "data-testid": "textfield"}}
+                       value={arabNumber} onChange={(e) => setArabNumber(e.target.value)}
                        required/>
             <br/>
-            <Button>Convert to Phrase!</Button>
+            <Button data-testid="btn">Convert to Phrase!</Button>
         </form>
     )
 }
