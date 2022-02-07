@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 function EnglishPhrase({result}){
     return (
-            <Result>{result}</Result>
+            <Result data-testid="result">{result}</Result>
             )
 }
 
