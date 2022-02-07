@@ -1,24 +1,42 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import App from './App';
+import {render, screen, fireEvent, getByTestId} from '@testing-library/react';
+import Form from "./components/form";
+import EnglishPhrase from "./components/englishphrase";
+import React from 'react';
+import {mount} from 'enzyme';
+import Title from "./components/header";
 
-test('basic user flow',async ()=>{
-    render(<App />);
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, {target:{value:7}});
-    const form = screen.getByTestId('conversionform');
-    fireEvent.submit(form);
-    const text = await screen.findByText("7 = seven");
-    expect(text).toBeInTheDocument();
+
+describe("Test form elements",()=> {
+    test('Test button name', () => {
+        render(<Form data-testid='conversionform'/>);
+        expect(screen.getByRole('button')).toHaveTextContent('Convert to Phrase!')
+    });
+
+    test('Test change the value of an input', () => {
+        const {getByTestId} = render(<input data-testid='textfield'/>);
+        const element = getByTestId('textfield');
+        fireEvent.change(element, {target: {value: 7}});
+        expect(element).toHaveValue("7");
+    });
 })
 
-test('ontest event fired', ()=>{
-    const testHandler = jest.fn();
-    render(<App onTestEvent={testHandler} />);
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, {target:{value:7}});
-    const form = screen.getByTestId('conversionform');
-    fireEvent.submit(form);
-    expect(testHandler).toBeCalled();
+
+describe("Test components rendering",()=>{
+    test('Header component render title', () => {
+        const titleTest = "The one conversion app";
+        const wrapper = mount(
+            <Title title={titleTest} />
+        );
+        expect(wrapper.text()).toBe('The one conversion app');
+    });
+
+    test('EnglishPhrase component render result inside it', () => {
+        const resultTest = "seven";
+        const wrapper = mount(
+            <EnglishPhrase result={resultTest} />
+        );
+        expect(wrapper.text()).toBe('seven');
+    });
 })
 
-// empty form, issue handling etc.
+
