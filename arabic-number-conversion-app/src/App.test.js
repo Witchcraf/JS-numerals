@@ -27,7 +27,7 @@ describe("Test components rendering",()=>{
         const wrapper = mount(
             <Title title={titleTest} />
         );
-        expect(wrapper.text()).toBe('The one conversion app');
+        expect(wrapper.text()).toBe('The one conversion app ');
     });
 
     test('EnglishPhrase component render result inside it', () => {
