@@ -82,7 +82,7 @@ function numberConversionTo1000(placeValueArray,divider, placeValueAsText){
     let remainder  = getRemainderOrDivisonFromSplitNumber(parseSplitNumber, divider, "%");
     let division  = getRemainderOrDivisonFromSplitNumber(parseSplitNumber, divider, "/");
 
-    if(parseSplitNumber>divider) {
+    if(parseSplitNumber>=divider) {
         result += getNameOfSplitNumber(division) +" "+ placeValueAsText +" ";
     }
     if(remainder > 0) {
